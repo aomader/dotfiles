@@ -38,7 +38,7 @@ def main():
 	parser = optparse.OptionParser(usage='Usage: %prog [OPTIONS]', description='Install all files and directories as dotfiles.')
 	parser.add_option('-b', '--backup', action='store_true', dest='backup', default=False, help='Backup old files')
 	parser.add_option('-c', '--copy', action='store_true', dest='copy', default=False, help='Copy files instead of hard-linking them')
-	parser.add_option('-e', '--exclude', action='callback', callback=exclude_list, type='string', dest='exclude', default=['README', 'install.py', '.hg'], help='Comma seperated list of files to exclude', metavar='FILES')
+	parser.add_option('-e', '--exclude', action='callback', callback=exclude_list, type='string', dest='exclude', default=['README', 'install.py', '.git'], help='Comma seperated list of files to exclude', metavar='FILES')
 	parser.add_option('-f', '--force', action='store_true', dest='force', default=False, help='Overwrite without confirmation')
 	parser.add_option('-p', '--prefix', action='store', dest='prefix', default=os.path.expanduser('~'), help='Install location [default: %default]', metavar='PATH')
 	

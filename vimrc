@@ -17,3 +17,6 @@ set shiftwidth=4
 set nowrap
 set list
 set listchars=tab:→\ ,extends:►,precedes:◄
+
+" enable snipMate
+filetype plugin on
