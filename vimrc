@@ -3,6 +3,7 @@ set encoding=UTF-8
 
 " syntax highlighting
 syntax on
+colorscheme desert
 
 " show linenumbers
 set number
