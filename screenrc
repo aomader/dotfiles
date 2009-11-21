@@ -1,0 +1,14 @@
+altscreen on
+bell_msg '%c bell -> %n%f %t^G'
+caption always
+caption string '%{= dw} %-w%{= KW} %n %t %{= dw}%+w %L>%= %{= dK}%D %d %c %{= dd}'
+hardstatus off
+msgwait 2
+startup_message off
+vbell on
+vbell_msg ' -- ring, ring!! -- '
+
+defscrollback 5000
+defutf8 on
+
+bind ^\^ select 0
