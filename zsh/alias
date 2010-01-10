@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+alias p='pacman'
+
+# Basics
+alias ..='cd ..'
+alias ls='ls -bhp --file-type --color=auto'
+alias ll='ls -l'
+alias la='ls -lA'
+alias mv='mv -v --backup=existing'
+alias rm='rm -iv'
+alias cp='cp -v'
+alias grep='grep --color=auto'

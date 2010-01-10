@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+function paste {
+	url=$(curl -n -F 'f:1=<-' http://ix.io)
+
+	echo "$url"
+}

@@ -27,6 +27,12 @@ Xft*antialias: true
 Xcursor*theme: dmz-aa
 Xcursor*size: 24
 
+! thetime
+thetime*format: %A, %d. %B, %H:%M:%S
+thetime*font: sans-8
+thetime*color: white
+thetime*position: -20,-15
+
 ! URxvt
 URxvt*termName: rxvt-256color
 URxvt*visualBell: true
