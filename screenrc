@@ -5,6 +5,7 @@ caption string '%{= dw} %-w%{= KW} %n %t %{= dw}%+w %L>%= %{= dK}%D %d %c %{= dd
 hardstatus off
 msgwait 2
 startup_message off
+term screen-256color
 vbell off
 
 defscrollback 5000

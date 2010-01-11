@@ -38,15 +38,13 @@ URxvt*termName: rxvt-256color
 URxvt*visualBell: true
 URxvt*urgentOnBell: true
 URxvt*mapAlert: true
-!URxvt.iconName: Terminal
 URxvt*geometry: 95x25
 URxvt*saveLines: 5000
 URxvt*scrollBar: false
 URxvt*cursorBlink: true
 URxvt*cursorUnderline: true
 URxvt*secondaryScroll: true
-URxvt*depth: 32
-URxvt*inheritPixmap: true
+#URxvt*inheritPixmap: true
 URxvt*perl-ext-common: default,matcher
 URxvt*urlLauncher: firefox
 URxvt*matcher.button: 1

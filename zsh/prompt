@@ -1,39 +1,39 @@
 #!/bin/zsh
 
 case $TERM in
-	*xterm*|rxvt|rxvt-unicode|rxvt-256color|(dt|k|E)term)
-		precmd () { print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~]\a" }
-		preexec () { print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~] ($1)\a" }
-		;;
-	screen)
-		precmd () {
-			print -Pn "\e]83;title \"$1\"\a"
-			print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~]\a"
-		}
-		preexec () {
-			print -Pn "\e]83;title \"$1\"\a"
-			print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~] ($1)\a"
-		}
-		;;
+    *xterm*|rxvt|rxvt-unicode|rxvt-256color|(dt|k|E)term)
+        precmd () { print -Pn "\e]0;%n@%M\a" }
+        preexec () { print -Pn "\e]0;%n@%M: $1\a" }
+        ;;
+    screen*)
+        precmd () {
+            print -Pn "\e]83;title \"$2\"\a"
+            print -Pn "\e]0;%n@%M\a"
+        }
+        preexec () {
+            print -Pn "\e]83;title \"$2\"\a"
+            print -Pn "\e]0;%n@%M: $2\a"
+        }
+        ;;
 esac
 
 set_prompt() {
-	autoload -U colors zsh/terminfo
-	colors
+    autoload -U colors zsh/terminfo
+    colors
 
-	setopt prompt_subst
+    setopt prompt_subst
 
-	for COLOR in RED BLUE GREEN YELLOW WHITE BLACK MAGENTA CYAN ORANGE; do
-		eval PR_$COLOR='%{$fg[${(L)COLOR}]%}'
-		eval PR_BRIGHT_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
-	done
+    for COLOR in RED BLUE GREEN YELLOW WHITE BLACK MAGENTA CYAN ORANGE; do
+        eval PR_$COLOR='%{$fg[${(L)COLOR}]%}'
+        eval PR_BRIGHT_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
+    done
 
-	PR_RESET="%{$reset_color%}"
-	PR_USER="%n"
-	PR_HOST="%m"
-	PR_DIR="%~"
+    PR_RESET="%{$reset_color%}"
+    PR_USER="%n"
+    PR_HOST="%m"
+    PR_DIR="%~"
 
-	PROMPT='${PR_BLUE}${PR_USER}${PR_RESET}@${PR_GREEN}${PR_HOST}${PR_RESET}:${PR_CYAN}${PR_DIR}${PR_RESET} %% ${PR_RESET}'
+    PROMPT='${PR_BLUE}${PR_USER}${PR_RESET}@${PR_GREEN}${PR_HOST}${PR_RESET}:${PR_CYAN}${PR_DIR}${PR_RESET} %% ${PR_RESET}'
 }
 
 set_prompt
