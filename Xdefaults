@@ -24,7 +24,7 @@ Xft*dpi: 96
 Xft*antialias: true
 
 ! Cursor
-Xcursor*theme: dmz-aa
+Xcursor*theme: Vanilla-DMZ-AA
 Xcursor*size: 24
 
 ! thetime
@@ -44,7 +44,6 @@ URxvt*scrollBar: false
 URxvt*cursorBlink: true
 URxvt*cursorUnderline: true
 URxvt*secondaryScroll: true
-#URxvt*inheritPixmap: true
 URxvt*perl-ext-common: default,matcher
 URxvt*urlLauncher: firefox
 URxvt*matcher.button: 1

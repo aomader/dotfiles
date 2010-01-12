@@ -1,6 +1,10 @@
 #!/bin/zsh
 
-alias p='pacman'
+# power muhahahaha
+alias sudo='sudo -E'
+alias s='sudo'
+
+alias p='sudo pacman'
 
 # Basics
 alias ..='cd ..'
