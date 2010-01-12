@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Key management
+gpg_info="${HOME}/.gpg_info"
+if test -f ${gpg_info} && kill -0 $(cut -d: -f 2 ${gpg_info} | head -n 1) 2>/dev/null; then
+    eval $(cat ${gpg_info})
+else
+    eval `/usr/bin/gpg-agent --daemon --enable-ssh-support --write-env-file ${gpg_info}`
+fi
+export GPG_AGENT_INFO
+export SSH_AUTH_SOCK
+export SSH_AGENT_PID
+
+xsetroot -cursor_name left_ptr &
+
+echo "SESSION !! $1"
+# Start the proper WM
+case $1 in
+    xmonad)
+        exec ck-launch-session xmonad
+        ;;
+    *)
+        exec ck-launch-session twm
+        ;;
+esac
