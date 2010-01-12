@@ -13,11 +13,13 @@ export SSH_AGENT_PID
 
 xsetroot -cursor_name left_ptr &
 
-echo "SESSION !! $1"
 # Start the proper WM
 case $1 in
     xmonad)
         exec ck-launch-session xmonad
+        ;;
+    pekwm)
+        exec ck-launch-session pekwm
         ;;
     *)
         exec ck-launch-session twm
