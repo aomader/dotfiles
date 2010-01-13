@@ -6,6 +6,7 @@ eval `dircolors -b`
 # Exports
 export EDITOR=vim
 export VISUAL=vim
+export OOO_FORCE_DESKTOP=gnome
 
 # Colors
 export NC='\e[0m'
