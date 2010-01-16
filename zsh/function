@@ -5,3 +5,20 @@ function paste {
 
 	echo "$url"
 }
+
+function extract() {
+    for i in $*; do
+        case $i in
+            *.tar.gz)
+                tar xzf $i
+                ;;
+            *.tar.bz2)
+                tar xjf $i
+                ;;
+            *.zip|*.rar)
+                7z x $i
+                ;;
+        esac
+    done
+}
+

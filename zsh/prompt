@@ -1,39 +1,42 @@
 #!/bin/zsh
 
-case $TERM in
-    *xterm*|rxvt|rxvt-unicode|rxvt-256color|(dt|k|E)term)
-        precmd () { print -Pn "\e]0;%n@%M\a" }
-        preexec () { print -Pn "\e]0;%n@%M: $1\a" }
-        ;;
-    screen*)
-        precmd () {
-            print -Pn "\e]83;title \"$2\"\a"
-            print -Pn "\e]0;%n@%M\a"
-        }
-        preexec () {
-            print -Pn "\e]83;title \"$2\"\a"
-            print -Pn "\e]0;%n@%M: $2\a"
-        }
-        ;;
-esac
+function precmd() { title }
+function preexec() { title "$1" }
 
-set_prompt() {
-    autoload -U colors zsh/terminfo
-    colors
+START_HOST="${HOST}"
 
-    setopt prompt_subst
+function title() {
+    local access
+    local cmd
 
-    for COLOR in RED BLUE GREEN YELLOW WHITE BLACK MAGENTA CYAN ORANGE; do
-        eval PR_$COLOR='%{$fg[${(L)COLOR}]%}'
-        eval PR_BRIGHT_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
-    done
+    if [[ $USERNAME != $LOGNAME || $START_HOST != $HOST ]]; then
+        access="${USERNAME}@${HOST}: "
+    fi
 
-    PR_RESET="%{$reset_color%}"
-    PR_USER="%n"
-    PR_HOST="%m"
-    PR_DIR="%~"
+    if [[ $# -eq 0 ]]; then
+        cmd="zsh %30<...<%~"
+    else
+        cmd="${(V)1//\%/\%\%}"
+    fi
 
-    PROMPT='${PR_BLUE}${PR_USER}${PR_RESET}@${PR_GREEN}${PR_HOST}${PR_RESET}:${PR_CYAN}${PR_DIR}${PR_RESET} %% ${PR_RESET}'
+    case $TERM in
+        rxvt*)
+            print -Pn "\e]0;${access}${cmd}\e\\"
+            ;;
+        screen*)
+            print -Pn "\ek${cmd}\e\\"
+            print -Pn "\e_${access}\e\\"
+            ;;
+    esac
 }
 
-set_prompt
+function git_branch() {
+    git branch 2> /dev/null | grep '^\*' | sed 's/^\*\ //'
+}
+
+setopt prompt_subst
+autoload -U colors && colors
+
+GIT_CMD="git branch 2> /dev/null | sed -n 's/\* \(.*\)/\(\1\)/p'"
+PROMPT="$fg[red]%(?..%? )%(#.$fg_bold[red].$fg[blue])%n$reset_color@$fg[green]%m$reset_color:$fg[cyan]%35<...<%~$reset_color %(#.#.%%) "
+
