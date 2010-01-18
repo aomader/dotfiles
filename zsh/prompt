@@ -1,15 +1,21 @@
 #!/bin/zsh
 
-function precmd() { title }
-function preexec() { title "$1" }
+setopt prompt_subst
 
-START_HOST="${HOST}"
+autoload -U colors && colors
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' branchformat "%b"
+zstyle ':vcs_info:*' actionformats "(%s/%b/%a)"
+zstyle ':vcs_info:*' formats "(%s/%b)"
+zstyle ':vcs_info:git:*' actionformats " %(%b/%a)"
+zstyle ':vcs_info:git:*' formats "(%b)"
 
 function title() {
     local access
     local cmd
 
-    if [[ $USERNAME != $LOGNAME || $START_HOST != $HOST ]]; then
+    if [[ $USERNAME != $LOGNAME || -n $SSH_CLIENT ]]; then
         access="${USERNAME}@${HOST}: "
     fi
 
@@ -30,13 +36,18 @@ function title() {
     esac
 }
 
-function git_branch() {
-    git branch 2> /dev/null | grep '^\*' | sed 's/^\*\ //'
+function vcs_pre() {
+    PSVAR=""
+    vcs_info
+    [[ -n $vcs_info_msg_0_ ]] && PSVAR[1]="$vcs_info_msg_0_"
 }
 
-setopt prompt_subst
-autoload -U colors && colors
+typeset -ga precmd_functions
+typeset -ga preexec_functions
 
-GIT_CMD="git branch 2> /dev/null | sed -n 's/\* \(.*\)/\(\1\)/p'"
-PROMPT="$fg[red]%(?..%? )%(#.$fg_bold[red].$fg[blue])%n$reset_color@$fg[green]%m$reset_color:$fg[cyan]%35<...<%~$reset_color %(#.#.%%) "
+precmd_functions+='title'
+precmd_functions+='vcs_pre'
+preexec_functions+='title'
+
+PROMPT='%(?..%{$fg[red]%}%? )%(#.%{$fg_bold[red]%}.%{$fg[blue]%})%n%{$fg_no_bold[default]%}@%{$fg[green]%}%m%{$fg[default]%}:%{$fg[cyan]%}%35<...<%~%(1v. %{$fg[yellow]%}%1v .)%{$fg[default]%}%(#.#.%%) '
 
