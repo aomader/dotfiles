@@ -11,7 +11,9 @@ export GPG_AGENT_INFO
 export SSH_AUTH_SOCK
 export SSH_AGENT_PID
 
+# Some visuals i wanna have really fast
 xsetroot -cursor_name left_ptr &
+hsetroot -center ~/.wallpapers/current
 
 # Start the proper WM
 case $1 in

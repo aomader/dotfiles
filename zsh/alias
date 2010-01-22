@@ -15,3 +15,7 @@ alias mv='mv -v --backup=existing'
 alias rm='rm -iv'
 alias cp='cp -v'
 alias grep='grep --color=auto'
+
+# shutdown/reboot the simple way :x
+alias pwr='dbus-send --system --print-reply --dest="org.freedesktop.Hal" /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown'
+alias rbt='dbus-send --system --print-reply --dest="org.freedesktop.Hal" /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Reboot'
