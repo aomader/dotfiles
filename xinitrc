@@ -1,11 +1,10 @@
 #!/bin/sh
 
 # Key management
-gpg_info="${HOME}/.gpg_info"
-if test -f ${gpg_info} && kill -0 $(cut -d: -f 2 ${gpg_info} | head -n 1) 2>/dev/null; then
-    eval $(cat ${gpg_info})
+if [ -f "${HOME}/.gpg-agent-info" ] && kill -0 $(cut -d: -f 2 "${HOME}/.gpg-agent-info" | head -n 1) 2>/dev/null; then
+    eval $(cat ${HOME}/.gpg-agent-info)
 else
-    eval `/usr/bin/gpg-agent --daemon --write-env-file ${gpg_info}`
+    eval $(gpg-agent --daemon)
 fi
 export GPG_AGENT_INFO
 export SSH_AUTH_SOCK
