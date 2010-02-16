@@ -22,3 +22,11 @@ function extract() {
     done
 }
 
+function scut() {
+    if [[ $# -ne 3 ]]; then
+        print "Usage: scut START IN OUT" && return 0
+    fi
+
+    mencoder -ovc copy -oac copy -aid 1 -ss $1 "$2" -o "$3"
+}
+
