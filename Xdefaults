@@ -19,7 +19,7 @@
 *color15: #F8F8F2
 
 ! Fonts
-URxvt*font: xft:DejaVu Sans Mono:pixelsize=11
+URxvt*font: xft:DejaVu Sans Mono:pixelsize=10
 Xft*dpi: 96
 Xft*antialias: true
 
