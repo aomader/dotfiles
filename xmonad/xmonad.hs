@@ -101,7 +101,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
                                   , ppLayout = fg myLayoutColor . layout
                                   , ppWsSep = "  "
                                   , ppSep = "     "
-                                  , ppTitle = (++) ("^fg(" ++ myFgColor ++ ")") . dzenEscape . shorten 100 . trim
+                                  , ppTitle = fg myFgColor . dzenEscape . shorten 100 . trim
                                   }
             where fg c = dzenColor c ""
                   icon n = "^i(" ++ (myIcon n) ++ ")"
