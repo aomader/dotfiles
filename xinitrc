@@ -12,17 +12,7 @@ export SSH_AGENT_PID
 
 # Some visuals i wanna have really fast
 xsetroot -cursor_name left_ptr &
-hsetroot -center ~/.wallpapers/current
+hsetroot -center ~/.wallpapers/current &
 
-# Start the proper WM
-case $1 in
-    xmonad)
-        exec ck-launch-session xmonad
-        ;;
-    pekwm)
-        exec ck-launch-session pekwm
-        ;;
-    *)
-        exec ck-launch-session twm
-        ;;
-esac
+# Start xmonad
+exec ck-launch-session xmonad
