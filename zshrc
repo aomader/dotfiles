@@ -45,28 +45,113 @@ bindkey "\e[3~" delete-char
 bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
 
-# Completion
+setopt hist_reduce_blanks
+setopt hist_ignore_space
+setopt append_history
+setopt extended_history
+setopt hist_ignore_all_dups
+setopt prompt_subst
+
+typeset -ga precmd_functions
+typeset -ga preexec_functions
+
 autoload -U compinit && compinit
+autoload -U colors && colors
+autoload -Uz vcs_info
+
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' menu select=2
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 zstyle ':completion:*:functions' ignored-patterns '_*'
 zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:kill:*'   force-list always
-zstyle ':completion:*' squeeze-slashes true
-
-# Define the prompt
-setopt prompt_subst
-autoload -U colors && colors
-autoload -Uz vcs_info
-
+zstyle ':completion:*:kill:*' force-list always
+zstyle ':completion:*:kill:*:jobs' verbose yes
 zstyle ':vcs_info:*' branchformat "%b"
 zstyle ':vcs_info:*' actionformats "(%s/%b/%a)"
 zstyle ':vcs_info:*' formats "(%s/%b)"
 zstyle ':vcs_info:git:*' actionformats " %(%b/%a)"
 zstyle ':vcs_info:git:*' formats "(%b)"
+
+PROMPT='%(?..%{$fg[red]%}%? )%(#.%{$fg_bold[red]%}.%{$fg[blue]%})%n%{$fg_no_bold[default]%}@%{$fg[green]%}%m%{$fg[default]%}:%{$fg[cyan]%}%35<...<%~%(1v. %{$fg[yellow]%}%1v .)%{$fg[default]%}%(#.#.%%) '
+
+# Really short shortcuts
+alias s='sudo'
+alias c='s clyde'
+alias v='vim'
+alias l='lesser'
+alias x='extract'
+alias -g L='| less'
+
+# Aliases
+alias sudo='sudo -E'
+alias ..='cd ..'
+alias ls='ls -bhp --file-type --color=auto'
+alias ll='ls -l'
+alias la='ls -lA'
+alias mv='mv -v --backup=existing'
+alias rm='rm -iv'
+alias cp='cp -v'
+alias grep='grep --color=auto'
+alias psg='ps -ef | grep '
+alias lsg='la | grep '
+alias mkdir='mkdir -p'
+alias vless='/usr/share/vim/vim73/macros/less.sh'
+
+# Functions
+function extract() {
+    [[ $# != 1 ]] && echo "Usage: $0 FILE\nExtract FILE to the current directory." && return 1
+    [[ ! -f $1 ]] && echo "$1: Is not a valid file" && return 1
+    
+    case $1 in
+        *.tar.gz|*.tgz)
+            tar xvzf $1 ;;
+        *.tar.bz2|*.tbz2)
+            tar xvjf $1 ;;
+        *.tar|*.gz|*.bz2|*.zip|*.rar|*.7z)
+            7z x $1 ;;
+        *)
+            echo "$1: No tool available to extract"
+            exit 1
+    esac
+}
+
+function lesser() {
+    if [[ $# == 0 ]]; then
+        ll .
+        return $?
+    fi
+
+    [[ $# != 1 ]] && echo "Usage: $0 PATH\nHandle PATH in a proper way" && return 1
+    [[ ! -e $1 ]] && echo "$1: Directory or file not found" && return 1
+
+    cmd=()
+
+    if [[ ! -r $1 ]]; then
+        cmd[1]="s"
+    fi
+
+    if [[ -f $1 ]]; then
+        case $1 in
+            *.log|*.err|*.warn|*.info)
+                cmd[2]="less" ;;
+            *)
+                cmd[2]="vless" ;;
+        esac
+    elif [[ -d $1 ]]; then
+        cmd[2]="ll"
+    else
+        echo "$1: No idea how to handle that"
+        return 1
+    fi
+
+    cmd[3]="$1"
+    eval ${(j: :)cmd}
+}
 
 function title() {
     local access
@@ -99,35 +184,7 @@ function vcs_pre() {
     [[ -n $vcs_info_msg_0_ ]] && PSVAR[1]="$vcs_info_msg_0_"
 }
 
-typeset -ga precmd_functions
-typeset -ga preexec_functions
-
 precmd_functions+='title'
 precmd_functions+='vcs_pre'
 preexec_functions+='title'
 
-PROMPT='%(?..%{$fg[red]%}%? )%(#.%{$fg_bold[red]%}.%{$fg[blue]%})%n%{$fg_no_bold[default]%}@%{$fg[green]%}%m%{$fg[default]%}:%{$fg[cyan]%}%35<...<%~%(1v. %{$fg[yellow]%}%1v .)%{$fg[default]%}%(#.#.%%) '
-
-# Aliases
-alias sudo='sudo -E'
-alias s='sudo'
-alias p='sudo pacman-color'
-
-alias ..='cd ..'
-alias ls='ls -bhp --file-type --color=auto'
-alias ll='ls -l'
-alias la='ls -lA'
-alias mv='mv -v --backup=existing'
-alias rm='rm -iv'
-alias cp='cp -v'
-alias grep='grep --color=auto'
-alias psg='ps -ef | grep '
-alias llg='ll | grep '
-
-alias pwr='dbus-send --system --print-reply --dest="org.freedesktop.Hal" /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown'
-alias rbt='dbus-send --system --print-reply --dest="org.freedesktop.Hal" /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Reboot'
-
-# Functions
-function power() {
-    [[ $# -ne 2 ]] && echo 'hehejo'
-}
