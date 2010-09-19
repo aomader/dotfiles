@@ -1,4 +1,8 @@
 [user]
-	name = Oliver Mader
-	email = dotb52@gmail.com
+name = Oliver Mader
+email = b52@reaktor42.de
 
+[color]
+diff = auto
+status = auto
+branch = auto
