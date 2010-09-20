@@ -1,96 +1,119 @@
 #!/usr/bin/env python
-#-*- coding: utf-8 -*-
-
+# -*- coding: utf-8 -*-
 
 """
 install.py  --  a dotfiles related install script
 
 AUTHORS
-  Oliver Mader <dotb52@gmail.com>
+  Oliver Mader <b52@reaktor42.de>
 
-Copyright (C) 2009 Oliver Mader
+Copyright (C) 2009,2010 Oliver Mader
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 """
-
 
 import optparse
 import os
 import shutil
 import sys
 
-
 def main():
-	def exclude_list(option, opt_str, value, parser):
-		parser.values.exclude = parser.values.exclude + value.split(',')
-	
-	parser = optparse.OptionParser(usage='Usage: %prog [OPTIONS]', description='Install all files and directories as dotfiles.')
-	parser.add_option('-b', '--backup', action='store_true', dest='backup', default=False, help='Backup old files')
-	parser.add_option('-c', '--copy', action='store_true', dest='copy', default=False, help='Copy files instead of hard-linking them')
-	parser.add_option('-e', '--exclude', action='callback', callback=exclude_list, type='string', dest='exclude', default=['README', 'install.py', '.git'], help='Comma seperated list of files to exclude', metavar='FILES')
-	parser.add_option('-f', '--force', action='store_true', dest='force', default=False, help='Overwrite without confirmation')
-	parser.add_option('-p', '--prefix', action='store', dest='prefix', default=os.path.expanduser('~'), help='Install location [default: %default]', metavar='PATH')
-	
-	(options, args) = parser.parse_args()
-	
-	def traverse(path):
-		for item in os.listdir(path):
-			source = os.path.join(path, item)
-			relative = os.path.relpath(source)
-			
-			if relative.startswith('.'):
-				destination = os.path.join(options.prefix, relative)
-			else:
-				destination = os.path.join(options.prefix, '.' + relative)
-			
-			if relative in options.exclude:
-				continue
-			
-			if os.path.isfile(source):
-				install(source, destination)
-			
-			if os.path.isdir(source):
-				if not os.path.exists(destination):
-					os.mkdir(destination)
-				
-				traverse(source)
-	
-	def install(source, destination):
-		if os.path.exists(destination):
-			if options.backup:
-				shutil.move(destination, destination + '.bkp')
-			elif options.force:
-				os.remove(destination)
-			else:
-				answer = raw_input(destination + ': File already exists, overwrite? [y/N]')
-				
-				if answer.lower() in ('y', 'yes'):
-					os.remove(destination)
-				else:
-					return
-		
-		if options.copy:
-			shutil.copy(source, destination)
-		else:
-			os.link(source, destination)
-	
-	traverse(os.getcwd())
+    def exclude_list(option, opt_str, value, parser):
+        parser.values.exclude = parser.values.exclude + value.split(',')
+    
+    parser = optparse.OptionParser(usage='Usage: %prog [OPTIONS] FILES/DIRECTORIES..', description='A simple yet powerful dotfiles install script')
+    parser.add_option('-b', '--backup', action='store_true', dest='backup', default=False, help='Backup old files')
+    parser.add_option('-c', '--copy', action='store_true', dest='copy', default=False, help='Copy files instead of hard-linking them')
+    parser.add_option('-s', '--soft', action='store_true', dest='soft', default=False, help='Use soft-links instead of hard-links')
+    parser.add_option('-f', '--force', action='store_true', dest='force', default=False, help='Overwrite without confirmation')
+    parser.add_option('-a', '--ask', action='store_true', dest='ask', default=False, help='Ask for every file to install')
+    parser.add_option('-e', '--exclude', action='callback', callback=exclude_list, type='string', dest='exclude', default=['README', 'install.py', '.git', '.svn', '.hg', '_darcs'], help='Comma seperated list of files/directories to exclude', metavar='FILES')
+    parser.add_option('-p', '--prefix', action='store', dest='prefix', default=os.path.expanduser('~'), help='Install location [default: %default]', metavar='PATH')
+    
+    (options, args) = parser.parse_args()
+
+    to_install = [os.path.join(os.getcwd(), x) for x in args]
+    excludes = [os.path.join(os.getcwd(), x) for x in options.exclude]
+
+    if not to_install:
+        parser.print_help()
+        sys.exit(1)
+    
+    def traverse(path):
+        for item in os.listdir(path):
+            source = os.path.join(path, item)
+            relative = os.path.relpath(source)
+            
+            if relative.startswith('.'):
+                destination = os.path.join(options.prefix, relative)
+            else:
+                destination = os.path.join(options.prefix, '.' + relative)
+
+            if source in excludes:
+                continue
+
+            if not source.startswith(tuple(x + '/' for x in to_install if os.path.isdir(x))) and not source in to_install:
+                continue
+            
+            if os.path.isfile(source):
+                install(source, destination)
+            elif os.path.isdir(source):
+                if not os.path.exists(destination):
+                    os.mkdir(destination)
+                    shutil.copymode(source, destination)
+                traverse(source)
+            else:
+                print >> sys.stderr, '%s: Don\'t know how to handle that' % relative
+    
+    def install(source, destination):
+        if options.ask and not raw_input('%s: Install this file? [y/N]' % destination).lower() in ('y', 'yes'):
+            return
+
+        if os.path.exists(destination):
+            if options.backup:
+                shutil.move(destination, destination + '.bkp')
+            elif options.force:
+                os.remove(destination)
+            else:
+                if raw_input('%s: File already exists, overwrite? [y/N]' % destination).lower() in ('y', 'yes'):
+                    os.remove(destination)
+                else:
+                    return
+        
+        if options.copy:
+            shutil.copy(source, destination)
+            typ = 'copy'
+        elif options.soft:
+            os.symlink(source, destination)
+            typ = 'soft-link'
+        else:
+            os.link(source, destination)
+            typ = 'hard-link'
+
+        print '%s: Installed (%s)' % (destination, typ)
+    
+    traverse(os.getcwd())
 
 
 if __name__ == '__main__':
-	try:
-		main()
-	except (KeyboardInterrupt, SystemExit):
-		sys.exit(1)
+    try:
+        main()
+    except (KeyboardInterrupt, SystemExit):
+        sys.exit(1)
 
