@@ -86,6 +86,7 @@ alias v='vim'
 alias l='lesser'
 alias x='extract'
 alias -g L='| less'
+alias -g Q='&> /dev/null &'
 
 # Aliases
 alias sudo='sudo -E'
@@ -182,6 +183,12 @@ function vcs_pre() {
     PSVAR=""
     vcs_info
     [[ -n $vcs_info_msg_0_ ]] && PSVAR[1]="$vcs_info_msg_0_"
+}
+
+function rc() {
+    if [[ $# != 2 ]] && echo "Usage: $0 SERVICE ACTION\nIssue /etc/rd.d/SERVICE ACTION" && return 1
+
+    eval "s /etc/rc.d/$1 $2"
 }
 
 precmd_functions+='title'
