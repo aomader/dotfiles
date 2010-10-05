@@ -1,6 +1,7 @@
 [user]
 name = Oliver Mader
 email = b52@reaktor42.de
+signingkey = 0x4929EAFE
 
 [color]
 diff = auto
