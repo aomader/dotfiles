@@ -1,14 +1,13 @@
 #!/bin/sh
 
 # Key management
-if [ -f "${HOME}/.gpg-agent-info" ] && kill -0 $(cut -d: -f 2 "${HOME}/.gpg-agent-info" | head -n 1) 2>/dev/null; then
-    eval $(cat ${HOME}/.gpg-agent-info)
+gpg_agent_info = "${HOME}/.gnupg/gpg-agent.info"
+if pgrep -u "${USER}" gpg-agent >/dev/null 2>&1; then
+    eval `cat ${gpg_agent_info}`
+    eval `cut -d= -f1 ${gpg_agent_info} | xargs echo export`
 else
-    eval $(gpg-agent --daemon)
+    eval `gpg-agent --daemon`
 fi
-export GPG_AGENT_INFO
-export SSH_AUTH_SOCK
-export SSH_AGENT_PID
 
 # Some visuals i wanna have really fast
 xsetroot -cursor_name left_ptr &
