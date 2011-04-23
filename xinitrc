@@ -12,7 +12,7 @@ export SSH_AGENT_PID
 
 # Some visuals i wanna have really fast
 xsetroot -cursor_name left_ptr &
-hsetroot -center ~/.wallpapers/current &
+hsetroot -fill ~/.wallpapers/current &
 
 # Start xmonad
 exec ck-launch-session xmonad
