@@ -82,16 +82,16 @@ def main():
                 print >> sys.stderr, '%s: Don\'t know how to handle that' % relative
     
     def install(source, destination):
-        if options.ask and not raw_input('%s: Install this file? [y/N]' % destination).lower() in ('y', 'yes'):
+        if options.ask and not input('%s: Install this file? [y/N]' % destination).lower() in ('y', 'yes'):
             return
 
-        if os.path.exists(destination):
+        if os.path.lexists(destination):
             if options.backup:
                 shutil.move(destination, destination + '.bkp')
             elif options.force:
                 os.remove(destination)
             else:
-                if raw_input('%s: File already exists, overwrite? [y/N]' % destination).lower() in ('y', 'yes'):
+                if input('%s: File already exists, overwrite? [y/N]' % destination).lower() in ('y', 'yes'):
                     os.remove(destination)
                 else:
                     return
@@ -106,7 +106,7 @@ def main():
             os.link(source, destination)
             typ = 'hard-link'
 
-        print '%s: Installed (%s)' % (destination, typ)
+        print('%s: Installed (%s)' % (destination, typ))
     
     traverse(os.getcwd())
 
