@@ -3,7 +3,9 @@ set encoding=UTF-8
 
 " syntax highlighting
 syntax on
-colorscheme desert
+colorscheme awesomeness
+set hls
+set cursorline
 
 " show linenumbers
 set number
@@ -19,6 +21,30 @@ set expandtab
 set nowrap
 set list
 set listchars=tab:→\ ,extends:►,precedes:◄
+
+" tabline
+function MyTabs()
+    let s = ''
+    for i in range(tabpagenr('$'))
+        let n = i + 1
+        if n == tabpagenr()
+            let s .= '%#TabLineSel#'
+        else
+            let s .= '%#TabLine#'
+        endif
+
+        let buflist = tabpagebuflist(n)
+        let winnr = tabpagewinnr(n)
+
+        let s .= '%' . (i + 1) . 'T'
+        let s .= ' ' . n . '.' . bufname(buflist[winnr - 1]) .' '
+    endfor
+
+    let s .= '%#TabLineFill#%T'
+
+    return s
+endfunction
+set tabline=%!MyTabs()
 
 " enable snipMate
 filetype plugin on
