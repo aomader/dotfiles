@@ -27,12 +27,6 @@ Xft*antialias: true
 Xcursor*theme: Vanilla-DMZ-AA
 Xcursor*size: 24
 
-! thetime
-thetime*format: %A, %d. %B, %H:%M:%S
-thetime*font: sans-8
-thetime*color: white
-thetime*position: -20,-15
-
 ! URxvt
 URxvt*termName: rxvt-256color
 URxvt*visualBell: true
@@ -49,5 +43,4 @@ URxvt*urlLauncher: firefox
 URxvt*matcher.button: 1
 URxvt*matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 URxvt*matcher.rend.0: Uline Bold
-
 
