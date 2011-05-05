@@ -1,4 +1,0 @@
-#define battery_full_width 6
-#define battery_full_height 8
-static unsigned char battery_full_bits[] = {
-   0x0c, 0x3f, 0x21, 0x2d, 0x2d, 0x2d, 0x21, 0x3f };

@@ -5,7 +5,7 @@ import XMonad.Actions.GridSelect
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
-import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.UrgencyHook (withUrgencyHook, NoUrgencyHook)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Gaps
@@ -20,6 +20,8 @@ import XMonad.Layout.WorkspaceDir as WD
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
+import Graphics.X11.Xlib.Extras
+
 import qualified Data.List as L
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
@@ -29,24 +31,26 @@ myFont = "ProggyTiny-7"
 myBgColor = "#1b1d1e"
 myFgColor = "#bbbbbb"
 myBorderColor = "#292c2d"
-myFocusedColor = "#57666a"
+myFocusedColor = "#839cad"-- "#505050"
 myCurrentColor = "#cd5c5c"
 myEmptyColor = "#4c4c4c"
 myHiddenColor = "#dddddd"
-myLayoutColor = "#666666"
+myLayoutColor = "#839cad"
 myUrgentColor = "#2b9ac8"
+myTitleColor = "#ffffff"
+mySepColor = "#58504c"
 myIcon name = myHome ++ "/.xmonad/icons/" ++ name ++ ".xbm"
 
 myWorkspaces = ["main", "web", "dev", "misc"]
 myTerminal = "urxvt"
-myBorderWidth = 1
+myBorderWidth = 2
 myModMask = mod4Mask
 
 myStartupHook = setWMName "LG3D"
 
 myLayoutHook = onWorkspace "dev" (tall ||| grid) $
              grid ||| tall ||| full
-             where myNamed n l = named n $ layoutHints . avoidStruts . gaps [(U, 3), (D, 3), (R, 3), (L, 3)] . spacing 3 $ l
+             where myNamed n l = named n $ {- layoutHints . -}avoidStruts {- . gaps [(U, 2), (D, 2), (R, 2), (L, 2)] . spacing 1 -} $ l
                    grid = myNamed "grid" Grid
                    tall = myNamed "tall" (Tall 1 (3/100) (1/2))
                    full = myNamed "full" Full
@@ -59,13 +63,27 @@ myManageHook = composeAll $
                 , resource =? "wicd-client.py" --> doFloat
                 , resource =? "DTA" --> doFloat <+> doShift "misc"
                 , className =? "org-igoweb-cgoban-CGoban" --> doFloat
+                , checkDialog --> doFloat
                 ]
                 ++
                 [ className =? n --> doFloat | n <- ["Dialog", "Download", "DTA", "Pinentry-gtk-2"]]
 
+checkDialog :: Query Bool
+checkDialog = ask >>= \w -> liftX $ do
+                a <- getAtom "_NET_WM_WINDOW_TYPE"
+                dialog <- getAtom "_NET_WM_WINDOW_TYPE_DIALOG"
+                mbr <- getProp a w
+                case mbr of
+                  Just [r] -> return $ elem (fromIntegral r) [dialog]
+                  _ -> return False
+
+-- | Helper to read a property
+--getProp :: Atom -> Window -> X (Maybe [CLong])
+getProp a w = withDisplay $ \dpy -> io $ getWindowProperty32 dpy a w
+
 myKeys conf = mkKeymap conf $
                [ ("M-q", kill)
-               , ("M-e", spawn "dmenu_run -l 8 -x 50 -y 50 -w 150 -fn \"xft:ProggyTiny-7\" -nb \"#1B1D1E\" -nf \"#a0a0a0\" -sb \"#333\" -sf \"#fff\" -p Run")
+               , ("M-e", spawn "dmenu_run -fn \"xft:ProggyTiny-7\" -nb \"#1B1D1E\" -nf \"#a0a0a0\" -sb \"#333\" -sf \"#fff\" -p Run")
                , ("M-<Return>", spawn $ XMonad.terminal conf)
                , ("M-S-q", spawn "exec killall dzen2" >> restart "xmonad" True)
                , ("M-m", windows W.shiftMaster)
@@ -90,9 +108,23 @@ myKeys conf = mkKeymap conf $
                ]
 
 
-myStatusBar = "dzen2 -x 0 -y 0 -h 16 -w 640 -ta l -fn " ++ myFont ++ " -bg \"" ++ myBgColor ++ "\" -fg \"" ++ myFgColor ++ "\""
-myResourceBar = "MY_HOME=\"" ++ myHome ++ "\" conky -c ~/.xmonad/conky.conf | dzen2 -x 640 -y 0 -h 16 -w 640 -ta r -fn " ++ myFont ++ " -bg \"" ++ myBgColor ++ "\" -fg \"" ++ myFgColor ++ "\""
-myLogHook h = dynamicLogWithPP $ defaultPP
+--myStatusBar :: LayoutClass l Window => XConfig l -> IO (XConfig (ModifiedLayout AvoidStruts l))
+myStatusBar = statusBar "xmobar" pp toggleStrutsKey
+  where
+    pp = defaultPP
+             { ppCurrent = xmobarColor myCurrentColor ""
+             , ppHidden = xmobarColor myHiddenColor ""
+             , ppHiddenNoWindows = xmobarColor myEmptyColor ""
+             , ppUrgent = xmobarColor myUrgentColor ""
+             , ppLayout = xmobarColor myLayoutColor ""
+             , ppWsSep = "  "
+             , ppSep = xmobarColor mySepColor "" "   |   "
+             , ppTitle = xmobarColor myTitleColor "" . shorten 120 . trim
+             }
+    toggleStrutsKey XConfig{modMask = modm} = (modm, xK_b)
+    
+
+{-
                                   { ppOutput = hPutStrLn h
                                   , ppCurrent = corner . fg myCurrentColor
                                   , ppHidden = corner . fg myHiddenColor
@@ -107,12 +139,10 @@ myLogHook h = dynamicLogWithPP $ defaultPP
                   icon n = "^i(" ++ (myIcon n) ++ ")"
                   corner = (++) (icon "corner")
                   layout n = icon ("layout-" ++ n)
+            -}
 
-main = do
-        status <- spawnPipe myStatusBar
-        resource <- spawnPipe myResourceBar
-        xmonad $ withUrgencyHook NoUrgencyHook
-               $ defaultConfig
+--xmonad $ withUrgencyHook NoUrgencyHook
+main = do xmonad =<< myStatusBar defaultConfig
                   { workspaces = myWorkspaces
                   , terminal = myTerminal
                   , borderWidth = myBorderWidth
@@ -121,7 +151,6 @@ main = do
                   , focusedBorderColor = myFocusedColor
                   , keys = myKeys
                   , layoutHook = myLayoutHook
-                  , logHook = myLogHook status
                   , startupHook = myStartupHook
                   , manageHook = myManageHook
                   }

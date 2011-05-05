@@ -1,4 +1,0 @@
-#define battery_ac_width 7
-#define battery_ac_height 8
-static unsigned char battery_ac_bits[] = {
-   0x14, 0x14, 0x7f, 0x41, 0x63, 0x3e, 0x08, 0x08 };

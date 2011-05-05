@@ -1,4 +1,0 @@
-#define battery_low_width 6
-#define battery_low_height 8
-static unsigned char battery_low_bits[] = {
-   0x0c, 0x3f, 0x21, 0x21, 0x21, 0x21, 0x21, 0x3f };
