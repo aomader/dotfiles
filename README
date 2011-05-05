@@ -1,0 +1,26 @@
+Packages
+
+    zsh
+    screen
+    xmonad
+    xmonad-contrib
+    dmenu-xft
+    gnupg2
+
+    ttf-dejavu
+
+    dropbox
+    dropbox-cli
+
+    elementary-icons
+    elementary-gtk-theme
+    xcursor-vanilla-dmz-aa
+
+    texlive-most
+
+    gpg-agent
+    ---------
+    
+    To use the gpg-agent with your ssh keys you need to do an initial "ssh-add"
+    which stores your key fingerprint in the ~/.gnupg/sshcontrol file so you
+    may use the gpg-agent with your ssh keys.
