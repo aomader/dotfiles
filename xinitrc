@@ -13,5 +13,8 @@ fi
 xsetroot -cursor_name left_ptr &
 hsetroot -fill ~/.wallpapers/current &
 
+# Blend Qt into GTK environment
+export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
+
 # Start xmonad
 exec ck-launch-session xmonad
