@@ -66,7 +66,6 @@ myManageHook = composeAll $
                 , resource =? "wicd-client.py" --> doFloat
                 , resource =? "DTA" --> doFloat <+> doShift "misc"
                 , className =? "org-igoweb-cgoban-CGoban" --> doFloat
-                , checkDialog --> doFloat
                 ]
                 ++
                 [ className =? n --> doFloat | n <- ["Dialog", "Download", "DTA", "Pinentry-gtk-2"]]
@@ -132,7 +131,7 @@ myStatusBar = statusBar "xmobar" pp toggleStrutsKey
             -}
 
 --xmonad $ withUrgencyHook NoUrgencyHook
-main = do xmonad =<< myStatusBar $ defaultConfig
+main = do xmonad =<< myStatusBar defaultConfig
                   { workspaces = myWorkspaces
                   , terminal = myTerminal
                   , borderWidth = myBorderWidth
