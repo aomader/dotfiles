@@ -4,8 +4,9 @@ import XMonad.Actions.DynamicWorkspaces as DW
 import XMonad.Actions.GridSelect
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
-import XMonad.Hooks.UrgencyHook (withUrgencyHook, NoUrgencyHook)
+import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Gaps
@@ -48,15 +49,17 @@ myModMask = mod4Mask
 
 myStartupHook = setWMName "LG3D"
 
-myLayoutHook = onWorkspace "dev" (tall ||| grid) $
-             grid ||| tall ||| full
+myLayoutHook = lessBorders OnlyFloat $ grid ||| tall ||| full
              where myNamed n l = named n $ {- layoutHints . -}avoidStruts {- . gaps [(U, 2), (D, 2), (R, 2), (L, 2)] . spacing 1 -} $ l
                    grid = myNamed "grid" Grid
                    tall = myNamed "tall" (Tall 1 (3/100) (1/2))
                    full = myNamed "full" Full
 
 myManageHook = composeAll $
-                [ className =? "MPlayer" --> doFloat <+> doF copyToAll
+                [ isFullscreen --> (doF W.focusDown <+> doFullFloat)
+                , isDialog     --> doFloat
+                , transience'
+                , className =? "MPlayer" --> doFloat <+> doF copyToAll
                 , className =? "Firefox" --> doShift "web"
                 , ((className =? "Firefox") <&&> (resource =? "Download")) --> doFloat <+> doShift "misc"
                 , ((className =? "Firefox") <&&> (resource =? "DAT")) --> doFloat <+> doShift "misc"
@@ -67,19 +70,6 @@ myManageHook = composeAll $
                 ]
                 ++
                 [ className =? n --> doFloat | n <- ["Dialog", "Download", "DTA", "Pinentry-gtk-2"]]
-
-checkDialog :: Query Bool
-checkDialog = ask >>= \w -> liftX $ do
-                a <- getAtom "_NET_WM_WINDOW_TYPE"
-                dialog <- getAtom "_NET_WM_WINDOW_TYPE_DIALOG"
-                mbr <- getProp a w
-                case mbr of
-                  Just [r] -> return $ elem (fromIntegral r) [dialog]
-                  _ -> return False
-
--- | Helper to read a property
---getProp :: Atom -> Window -> X (Maybe [CLong])
-getProp a w = withDisplay $ \dpy -> io $ getWindowProperty32 dpy a w
 
 myKeys conf = mkKeymap conf $
                [ ("M-q", kill)
@@ -142,7 +132,7 @@ myStatusBar = statusBar "xmobar" pp toggleStrutsKey
             -}
 
 --xmonad $ withUrgencyHook NoUrgencyHook
-main = do xmonad =<< myStatusBar defaultConfig
+main = do xmonad =<< myStatusBar $ defaultConfig
                   { workspaces = myWorkspaces
                   , terminal = myTerminal
                   , borderWidth = myBorderWidth
