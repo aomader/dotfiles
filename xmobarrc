@@ -9,7 +9,4 @@ Config
                  , Run Memory ["-t", "mem:<fc=#cccccc><usedratio>%</fc>"] 10
                  ]
     , template = "  %StdinReader% }{ <fc=#777777>%multicpu%  <fc=#ffffff>/</fc>  %memory%</fc>        %date%  "
-
-
-
     }
