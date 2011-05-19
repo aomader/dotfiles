@@ -7,7 +7,7 @@ eval `dircolors -b`
 export EDITOR=vim
 export VISUAL=vim
 export OOO_FORCE_DESKTOP=gnome
-export PATH="~/.cabal/bin:${PATH}"
+export PATH="${HOME}/.cabal/bin:${PATH}"
 
 # Colors
 export NC='\e[0m'
