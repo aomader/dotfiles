@@ -6,6 +6,7 @@ eval `dircolors -b`
 # Exports
 export EDITOR=vim
 export VISUAL=vim
+export BROWSER=luakit
 export OOO_FORCE_DESKTOP=gnome
 export PATH="${HOME}/.cabal/bin:${PATH}"
 

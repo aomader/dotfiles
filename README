@@ -6,6 +6,7 @@ Packages
     xmonad-contrib
     dmenu-xft
     gnupg2
+    numlockx
 
     ttf-dejavu
 
@@ -17,6 +18,14 @@ Packages
     xcursor-vanilla-dmz-aa
 
     texlive-most
+
+    vim
+    ---
+        
+        Build with python support
+
+        Requires:
+            pep8
 
     gpg-agent
     ---------

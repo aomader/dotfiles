@@ -16,11 +16,22 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+set ruler
+set rulerformat="%l/%L (%p%%), %c"
+set showmatch
+set display+=lastline
 
 " visualize non printable chars
 set nowrap
 set list
 set listchars=tab:→\ ,extends:►,precedes:◄
+
+" folding
+set foldmethod=indent
+set foldlevel=99
+
+" python pep8 and validation
+let g:pyflakes_use_quickfix=0
 
 " tabline
 function MyTabs()
@@ -46,15 +57,16 @@ function MyTabs()
 endfunction
 set tabline=%!MyTabs()
 
-" enable snipMate
-filetype plugin on
+filetype on
+filetype plugin indent on
+call pathogen#infect()
 
 " intellisense, what else?
-autocmd FileType c set omnifunc=ccomplete#Complete
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+" autocmd FileType c set omnifunc=ccomplete#Complete
+" autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+" autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+" autocmd FileType python set omnifunc=pythoncomplete#Complete
+" autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 
