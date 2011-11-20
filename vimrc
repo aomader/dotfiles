@@ -1,3 +1,6 @@
+" load our vim/bundle stuff
+call pathogen#infect()
+
 " lets use the internet standard charset
 set encoding=UTF-8
 
@@ -9,6 +12,9 @@ set cursorline
 
 " show linenumbers
 set number
+
+" also yank to X clipboard, requires +X11 +clipboard
+set clipboard=unnamedplus
 
 " indention rules
 set autoindent
@@ -29,6 +35,12 @@ set listchars=tab:→\ ,extends:►,precedes:◄
 " folding
 set foldmethod=indent
 set foldlevel=99
+
+" window focus movement
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
 
 " python pep8 and validation
 let g:pyflakes_use_quickfix=0
@@ -59,7 +71,6 @@ set tabline=%!MyTabs()
 
 filetype on
 filetype plugin indent on
-call pathogen#infect()
 
 " intellisense, what else?
 " autocmd FileType c set omnifunc=ccomplete#Complete

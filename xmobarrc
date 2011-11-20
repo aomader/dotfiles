@@ -2,7 +2,7 @@ Config
     { font = "xft:ProggyTiny:pixelsize=9"
     , fgColor = "#888888"
     , bgColor = "#2d2d2d"
-    , position = Top
+    , position = TopSize L 100 16
     , commands = [ Run StdinReader
                  , Run Date "<fc=#bbbbbb>%A %d, <fc=#ffffff>%H:%M</fc></fc>" "date" 30
                  , Run MultiCpu ["-t", "cpu:<fc=#cccccc><total>%</fc>"] 10

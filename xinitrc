@@ -13,13 +13,17 @@ fi
 xsetroot -cursor_name left_ptr &
 hsetroot -fill ~/.wallpapers/current &
 
-dropboxd &
-
 # Blend Qt into GTK environment
 export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
+# Some xmonad related bonus
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Enable NumPad
 numlockx &
+# Dropbox :x
+dropboxd &
+# Clipboard synchronization
+parcellite &
 
 # Start xmonad
 exec ck-launch-session xmonad

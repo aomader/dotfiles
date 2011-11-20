@@ -31,7 +31,7 @@ myBgColor      = "#1b1d1e"
 myFgColor      = "#bbbbbb"
 mySelFgColor   = "#ffffff"
 mySelBgColor   = "#333333"
-myBorderColor  = "#292c2d"
+myBorderColor  = "#40464b"
 myFocusedColor = "#839cad"
 myCurrentColor = "#cd5c5c"
 myEmptyColor   = "#4c4c4c"
@@ -65,6 +65,7 @@ myManageHook = composeAll $
     , transience'
     , className =? "MPlayer" --> doFloat <+> doF copyToAll
     , className =? "Smplayer" --> doFloat <+> doF copyToAll
+    , className =? "stalonetray" --> doIgnore
     ] ++
     [className =? n --> doFloat | n <- dialogCFs] ++
     [title =? n --> doFloat | n <- dialogNFs]
@@ -78,7 +79,7 @@ myKeys conf = mkKeymap conf $
     [ ("M-q", kill)
     , ("M-e", spawn dmenu)
     , ("M-<Return>", spawn $ terminal conf)
-    , ("M-S-q", restart "xmonad" True)
+    , ("M-S-q", spawn "exec killall stalonetray" >> restart "xmonad" True)
     , ("M-m", windows W.shiftMaster)
     , ("M-t", withFocused $ windows . W.sink)
     , ("M-,", sendMessage Shrink)
@@ -117,6 +118,7 @@ myStatusBar = statusBar "xmobar" myPP toggleStrutsKey
 
 
 main = do
+    stalonetray <- spawnPipe "stalonetray"
     xmonad . withUrgencyHook NoUrgencyHook =<< myStatusBar defaultConfig
         { workspaces = myWorkspaces
         , terminal = myTerminal
