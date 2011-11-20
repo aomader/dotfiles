@@ -8,7 +8,7 @@ export EDITOR=vim
 export VISUAL=vim
 export BROWSER=luakit
 export OOO_FORCE_DESKTOP=gnome
-export PATH="${HOME}/.cabal/bin:${PATH}"
+export PATH="${HOME}/.bin:${HOME}/.cabal/bin:${PATH}"
 
 # Colors
 export NC='\e[0m'
@@ -104,6 +104,7 @@ alias psg='ps -ef | grep '
 alias lsg='la | grep '
 alias mkdir='mkdir -p'
 alias vless='/usr/share/vim/vim73/macros/less.sh'
+alias proxy='sshuttle -r b52@reaktor42.de --dns 0/0'
 
 # Functions
 function extract() {
