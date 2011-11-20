@@ -8,6 +8,9 @@ export EDITOR=vim
 export VISUAL=vim
 export BROWSER=luakit
 export OOO_FORCE_DESKTOP=gnome
+export GDK_USE_XFT=1
+export QT_XFT=true
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 export PATH="${HOME}/.bin:${HOME}/.cabal/bin:${PATH}"
 
 # Colors

@@ -22,6 +22,9 @@
 URxvt*font: xft:DejaVu Sans Mono:pixelsize=10
 Xft*dpi: 96
 Xft*antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintsfull
 
 ! Cursor
 Xcursor*theme: Vanilla-DMZ-AA
