@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Key management
-gpg_agent_info = "${HOME}/.gnupg/gpg-agent.info"
+gpg_agent_info="${HOME}/.gnupg/gpg-agent.info"
 if pgrep -u "${USER}" gpg-agent >/dev/null 2>&1; then
     eval `cat ${gpg_agent_info}`
     eval `cut -d= -f1 ${gpg_agent_info} | xargs echo export`
 else
-    eval `gpg-agent --daemon`
+    eval `gpg-agent --enable-ssh-support --write-env-file=${gpg_agent_info} --daemon`
 fi
 
 # Some visuals i wanna have really fast

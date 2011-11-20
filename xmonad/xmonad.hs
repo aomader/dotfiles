@@ -64,6 +64,7 @@ myManageHook = composeAll $
     , isDialog     --> doFloat
     , transience'
     , className =? "MPlayer" --> doFloat <+> doF copyToAll
+    , className =? "Smplayer" --> doFloat <+> doF copyToAll
     ] ++
     [className =? n --> doFloat | n <- dialogCFs] ++
     [title =? n --> doFloat | n <- dialogNFs]
