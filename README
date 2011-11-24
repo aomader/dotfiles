@@ -7,6 +7,8 @@ Packages
     dmenu-xft
     gnupg2
     numlockx
+    stalonetray
+    parcellite
 
     ttf-dejavu
 
@@ -21,15 +23,11 @@ Packages
 
     vim
     ---
-        
-        Build with python support
-
-        Requires:
-            pep8
+    Build with python support and +X11 +clipboard. It also requires
+    the pep8 executable.
 
     gpg-agent
     ---------
-    
     To use the gpg-agent with your ssh keys you need to do an initial "ssh-add"
     which stores your key fingerprint in the ~/.gnupg/sshcontrol file so you
     may use the gpg-agent with your ssh keys.

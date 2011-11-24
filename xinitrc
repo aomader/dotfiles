@@ -20,10 +20,11 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Enable NumPad
 numlockx &
-# Dropbox :x
-dropboxd &
 # Clipboard synchronization
 parcellite &
+
+# Source device dependent xinitrc
+. ${HOME}/.xinitrc.local
 
 # Start xmonad
 exec ck-launch-session xmonad
