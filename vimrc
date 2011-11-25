@@ -7,11 +7,6 @@ set encoding=UTF-8
 " syntax highlighting
 syntax on
 colorscheme awesomeness
-set hls
-set cursorline
-
-" show linenumbers
-set number
 
 " also yank to X clipboard, requires +X11 +clipboard
 set clipboard=unnamedplus
@@ -22,28 +17,45 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+set backspace=indent,eol,start
+
+" visuals
+set list
+set listchars=tab:→\ ,extends:►,precedes:◄
+set formatoptions+=tc
 set ruler
 set rulerformat="%l/%L (%p%%), %c"
 set showmatch
 set display+=lastline
+set number
+set cursorline
 
-" visualize non printable chars
-set nowrap
-set list
-set listchars=tab:→\ ,extends:►,precedes:◄
+" search
+set hls
+set ignorecase
+set smartcase
 
 " folding
 set foldmethod=indent
 set foldlevel=99
 
 " window focus movement
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+map <C-h> <C-w>h
 
 " python pep8 and validation
 let g:pyflakes_use_quickfix=0
+
+" paste on C-p using lodgeit
+map <C-p> <ESC>:Lodgeit<CR>
+
+" python related settings
+au FileType py set textwidth=79
+au FileType py set smartindent
+" c related settings
+au FileType c set textwidth=79
 
 " tabline
 function MyTabs()
@@ -68,16 +80,3 @@ function MyTabs()
     return s
 endfunction
 set tabline=%!MyTabs()
-
-filetype on
-filetype plugin indent on
-
-" intellisense, what else?
-" autocmd FileType c set omnifunc=ccomplete#Complete
-" autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-" autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-" autocmd FileType python set omnifunc=pythoncomplete#Complete
-" autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-

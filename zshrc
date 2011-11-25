@@ -108,6 +108,7 @@ alias lsg='la | grep '
 alias mkdir='mkdir -p'
 alias vless='/usr/share/vim/vim73/macros/less.sh'
 alias proxy='sshuttle -r b52@reaktor42.de --dns 0/0'
+alias paste='lodgeit -e utf-8 -p'
 
 # Functions
 function extract() {
