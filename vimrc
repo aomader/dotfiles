@@ -49,7 +49,14 @@ map <C-h> <C-w>h
 let g:pyflakes_use_quickfix=0
 
 " paste on C-p using lodgeit
-map <C-p> <ESC>:Lodgeit<CR>
+map <C-p> :Lodgeit<CR>
+
+" NERDTree settings
+let NERDTreeChDirMode=2
+let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc$', '^\.']
+let NERDTreeShowBookmarks=1
+map <F3> :NERDTreeToggle<CR>
+
 
 " python related settings
 au FileType py set textwidth=79
