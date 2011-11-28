@@ -103,12 +103,16 @@ alias mv='mv -v --backup=existing'
 alias rm='rm -iv'
 alias cp='cp -v'
 alias grep='grep --color=auto'
-alias psg='ps -ef | grep '
+alias psg='ps -ef | grep -v grep | grep '
 alias lsg='la | grep '
 alias mkdir='mkdir -p'
 alias vless='/usr/share/vim/vim73/macros/less.sh'
 alias proxy='sshuttle -r b52@reaktor42.de --dns 0/0'
 alias paste='lodgeit -e utf-8 -p'
+alias shutdown='dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop'
+alias restart='dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart'
+alias suspend='dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
+alias hibernate='dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Hibernate'
 
 # Functions
 function extract() {
@@ -126,6 +130,14 @@ function extract() {
             echo "$1: No tool available to extract"
             exit 1
     esac
+}
+
+function mplayer() {
+    xautolock -disable
+    xset -dpms
+    =mplayer $@
+    xset +dpms
+    xautolock -enable
 }
 
 function lesser() {
@@ -190,12 +202,6 @@ function vcs_pre() {
     PSVAR=""
     vcs_info
     [[ -n $vcs_info_msg_0_ ]] && PSVAR[1]="$vcs_info_msg_0_"
-}
-
-function rc() {
-    if [[ $# != 2 ]] && echo "Usage: $0 SERVICE ACTION\nIssue /etc/rd.d/SERVICE ACTION" && return 1
-
-    eval "s /etc/rc.d/$1 $2"
 }
 
 precmd_functions+='title'

@@ -87,6 +87,7 @@ myKeys conf = mkKeymap conf $
     , ("M-<Space>", sendMessage NextLayout)
     , ("M-<Tab>", windows W.focusDown)
     , ("M-S-<Tab>", windows W.focusUp)
+    , ("M-S-l", spawn "xautolock -locknow")
     , ("<XF86AudioMute>", spawn "amixer set Master toggle")
     , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%-")
     , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+")

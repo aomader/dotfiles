@@ -22,6 +22,8 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 numlockx &
 # Clipboard synchronization
 parcellite &
+# Auto locker
+xautolock -detectsleep &
 
 # Source device dependent xinitrc
 . ${HOME}/.xinitrc.local

@@ -11,6 +11,11 @@ Packages
     parcellite
     lodgeit
 
+    xautolock
+    i3lock-libcairo
+    upower
+    acpid
+
     ttf-dejavu
 
     dropbox
