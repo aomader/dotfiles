@@ -1,5 +1,6 @@
 import XMonad
 import XMonad.Actions.CopyWindow
+import XMonad.Actions.WindowNavigation
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -77,7 +78,7 @@ myManageHook = composeAll $
 -- All keyboard shortcuts
 myKeys conf = mkKeymap conf $
     [ ("M-q", kill)
-    , ("M-e", spawn dmenu)
+    , ("M-e", spawn "gmrun")
     , ("M-<Return>", spawn $ terminal conf)
     , ("M-S-q", spawn "exec killall stalonetray" >> restart "xmonad" True)
     , ("M-m", windows W.shiftMaster)
@@ -98,10 +99,6 @@ myKeys conf = mkKeymap conf $
                                   , ("M-S-", windows . W.shift)
                                   ]
     ]
-  where
-    dmenu = "dmenu_run -fn \"" ++ myFont ++ "\" -nb \"" ++ myBgColor ++
-            "\" -nf \"" ++ myFgColor ++ "\" -sb \"" ++ mySelBgColor ++
-            "\" -sf \"" ++ mySelFgColor ++ "\" -p Run"
 
 
 -- A simple xmobar statusbar controlled by XMonad
@@ -122,7 +119,7 @@ myStatusBar = statusBar "xmobar" myPP toggleStrutsKey
 
 main = do
     stalonetray <- spawnPipe "stalonetray"
-    xmonad . withUrgencyHook NoUrgencyHook =<< myStatusBar defaultConfig
+    config <- withWindowNavigation (xK_k, xK_h, xK_j, xK_l) $ defaultConfig
         { workspaces = myWorkspaces
         , terminal = myTerminal
         , borderWidth = myBorderWidth
@@ -134,4 +131,5 @@ main = do
         , startupHook = myStartupHook
         , manageHook = myManageHook
         }
+    xmonad . withUrgencyHook NoUrgencyHook =<< myStatusBar config
 

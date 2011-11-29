@@ -1,0 +1,16 @@
+Terminal = urxvt
+TermExec = ${Terminal} -e
+AlwaysInTerm = ssh vim man
+
+Width = 400
+Top = 300
+Left = 450
+
+History = 256
+ShowLast = 1
+
+URL_http = luakit '%u'
+URL_man = ${TermExec} 'man %s'
+
+EXT:lyx = lyx '%s'
+EXT:pdf = zathura '%s'

@@ -4,7 +4,7 @@ Packages
     screen
     xmonad
     xmonad-contrib
-    dmenu-xft
+    gmrun
     gnupg2
     numlockx
     stalonetray
@@ -12,7 +12,7 @@ Packages
     lodgeit
 
     xautolock
-    i3lock-libcairo
+    slock
     upower
     acpid
 

@@ -48,9 +48,9 @@ URxvt*matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 URxvt*matcher.rend.0: Uline Bold
 
 Xautolock.time: 10
-Xautolock.locker: i3lock -i /home/b52/.wallpapers/locked
+Xautolock.locker: slock
 Xautolock.killtime: 10
-Xautolock.killer: dbus-send --system --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+Xautolock.killer: dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend
 Xautolock.corners: 000+
 Xautolock.cornerdelay: 3
 
