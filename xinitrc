@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Read Xresources
+xrdb -merge ~/.Xresources
+
 # Key management
 gpg_agent_info="${HOME}/.gnupg/gpg-agent.info"
 if pgrep -u "${USER}" gpg-agent >/dev/null 2>&1; then
