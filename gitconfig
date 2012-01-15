@@ -7,3 +7,7 @@ signingkey = 0x4929EAFE
 diff = auto
 status = auto
 branch = auto
+ui = true
+
+[format]
+pretty = oneline
