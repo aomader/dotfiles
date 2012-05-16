@@ -20,9 +20,10 @@
 
 ! Fonts
 URxvt*font: xft:DejaVu Sans Mono:pixelsize=10
-Xft*dpi: 96
-Xft*antialias: true
-Xft.rgba: rgb
+Xft.dpi: 96
+Xft.antialias: true
+Xft.lcdfilter:  lcddefault
+Xft.autohint: false
 Xft.hinting: true
 Xft.hintstyle: hintsfull
 
