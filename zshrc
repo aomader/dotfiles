@@ -6,7 +6,7 @@ eval `dircolors -b`
 # Exports
 export EDITOR=vim
 export VISUAL=vim
-export BROWSER=luakit
+export BROWSER=dwb
 export OOO_FORCE_DESKTOP=gnome
 export GDK_USE_XFT=1
 export QT_XFT=true
@@ -86,6 +86,7 @@ PROMPT='%(?..%{$fg[red]%}%? )%(#.%{$fg_bold[red]%}.%{$fg[blue]%})%n%{$fg_no_bold
 
 # Really short shortcuts
 alias s='sudo'
+alias p='s pacman'
 alias c='s clyde'
 alias v='vim'
 alias l='lesser'
@@ -108,11 +109,9 @@ alias lsg='la | grep '
 alias mkdir='mkdir -p'
 alias vless='/usr/share/vim/vim73/macros/less.sh'
 alias proxy='sshuttle -r b52@reaktor42.de --dns 0/0'
-alias paste='lodgeit -e utf-8 -p'
-alias shutdown='dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop'
-alias restart='dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart'
-alias suspend='dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend'
-alias hibernate='dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Hibernate'
+alias paste='fb'
+alias hibernate='systemctl hibernate'
+alias suspend='systemctl suspend'
 
 # Functions
 function extract() {

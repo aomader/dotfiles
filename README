@@ -9,7 +9,7 @@ Packages
     numlockx
     stalonetray
     parcellite
-    lodgeit
+    fb-client
 
     xautolock
     slock
@@ -17,6 +17,7 @@ Packages
     acpid
 
     ttf-dejavu
+    terminus-font
 
     dropbox
     dropbox-cli
@@ -26,11 +27,8 @@ Packages
     xcursor-vanilla-dmz-aa
 
     texlive-most
-
-    vim
-    ---
-    Build with python support and +X11 +clipboard. It also requires
-    the pep8 executable.
+    gvim
+    dwb-hg
 
     gpg-agent
     ---------
