@@ -11,7 +11,7 @@ export OOO_FORCE_DESKTOP=gnome
 export GDK_USE_XFT=1
 export QT_XFT=true
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
-export PATH="$(ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/.bin:${HOME}/.cabal/bin:${PATH}"
+export PATH="$(which ruby && ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/.bin:${HOME}/.cabal/bin:${PATH}"
 
 # Colors
 export NC='\e[0m'
