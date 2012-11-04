@@ -12,6 +12,7 @@ export GDK_USE_XFT=1
 export QT_XFT=true
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 export PATH="$(which ruby && ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/.bin:${HOME}/.cabal/bin:${PATH}"
+export PYTHONDOCS=/usr/share/doc/python/html/
 
 # Colors
 export NC='\e[0m'
