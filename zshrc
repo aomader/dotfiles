@@ -6,7 +6,7 @@ eval `dircolors -b`
 # Exports
 export EDITOR=vim
 export VISUAL=vim
-export BROWSER=dwb
+export BROWSER=firefox
 export OOO_FORCE_DESKTOP=gnome
 export GDK_USE_XFT=1
 export QT_XFT=true
