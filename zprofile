@@ -1,8 +1,7 @@
 #!/bin/zsh
 
-if [[ -z $DISPLAY ]] && [[ $(tty) == "/dev/tty1" ]]; then
+if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] ; then
     clear
-    startx -- -nolisten tcp -deferglyphs 16 &> /dev/null
-    logout
+    exec startx -- -nolisten tcp -deferglyphs 16 vt1 &> /dev/null
 fi
 

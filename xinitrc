@@ -33,4 +33,4 @@ xautolock -detectsleep &
 . ${HOME}/.xinitrc.local
 
 # Start xmonad
-exec ck-launch-session xmonad
+exec xmonad
