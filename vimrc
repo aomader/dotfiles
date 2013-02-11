@@ -9,7 +9,6 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " packages
-Bundle 'ervandew/supertab'
 Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'msanders/snipmate.vim'
 Bundle 'wavded/vim-stylus'
@@ -18,6 +17,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'pbrisbin/html-template-syntax'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
+Bundle 'Valloric/YouCompleteMe'
 
 filetype plugin indent on
 
