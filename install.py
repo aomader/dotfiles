@@ -7,7 +7,7 @@ install.py  --  a dotfiles related install script
 AUTHORS
   Oliver Mader <b52@reaktor42.de>
 
-Copyright (C) 2009,2010 Oliver Mader
+Copyright (C) 2009-2013 Oliver Mader
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,19 +33,36 @@ import os
 import shutil
 import sys
 
+
 def main():
     def exclude_list(option, opt_str, value, parser):
         parser.values.exclude = parser.values.exclude + value.split(',')
-    
-    parser = optparse.OptionParser(usage='Usage: %prog [OPTIONS] FILES/DIRECTORIES..', description='A simple yet powerful dotfiles install script')
-    parser.add_option('-b', '--backup', action='store_true', dest='backup', default=False, help='Backup old files')
-    parser.add_option('-c', '--copy', action='store_true', dest='copy', default=False, help='Copy files instead of hard-linking them')
-    parser.add_option('-s', '--soft', action='store_true', dest='soft', default=False, help='Use soft-links instead of hard-links')
-    parser.add_option('-f', '--force', action='store_true', dest='force', default=False, help='Overwrite without confirmation')
-    parser.add_option('-a', '--ask', action='store_true', dest='ask', default=False, help='Ask for every file to install')
-    parser.add_option('-e', '--exclude', action='callback', callback=exclude_list, type='string', dest='exclude', default=['README', 'install.py', '.git', '.svn', '.hg', '_darcs'], help='Comma seperated list of files/directories to exclude', metavar='FILES')
-    parser.add_option('-p', '--prefix', action='store', dest='prefix', default=os.path.expanduser('~'), help='Install location [default: %default]', metavar='PATH')
-    
+
+    parser = optparse.OptionParser(
+        usage='Usage: %prog [OPTIONS] FILES/DIRECTORIES..',
+        description='A simple yet powerful dotfiles install script')
+    parser.add_option('-b', '--backup', action='store_true', dest='backup',
+                      default=False, help='Backup old files')
+    parser.add_option('-c', '--copy', action='store_true', dest='copy',
+                      default=False,
+                      help='Copy files instead of hard-linking them')
+    parser.add_option('-s', '--soft', action='store_true', dest='soft',
+                      default=False,
+                      help='Use soft-links instead of hard-links')
+    parser.add_option('-f', '--force', action='store_true', dest='force',
+                      default=False, help='Overwrite without confirmation')
+    parser.add_option('-a', '--ask', action='store_true', dest='ask',
+                      default=False, help='Ask for every file to install')
+    parser.add_option('-e', '--exclude', action='callback',
+                      callback=exclude_list, type='string', dest='exclude',
+                      default=['README', 'install.py', '.git', '.svn', '.hg',
+                               '_darcs'],
+                      help='Comma seperated list of files/directories to exclude',
+        metavar='FILES')
+    parser.add_option('-p', '--prefix', action='store', dest='prefix',
+        default=os.path.expanduser('~'),
+        help='Install location [default: %default]', metavar='PATH')
+
     (options, args) = parser.parse_args()
 
     to_install = [os.path.join(os.getcwd(), x) for x in args]
@@ -54,12 +71,12 @@ def main():
     if not to_install:
         parser.print_help()
         sys.exit(1)
-    
+
     def traverse(path):
         for item in os.listdir(path):
             source = os.path.join(path, item)
             relative = os.path.relpath(source)
-            
+
             if relative.startswith('.'):
                 destination = os.path.join(options.prefix, relative)
             else:
@@ -68,9 +85,10 @@ def main():
             if source in excludes:
                 continue
 
-            if not source.startswith(tuple(x + '/' for x in to_install if os.path.isdir(x))) and not source in to_install:
+            starts = tuple(x + '/' for x in to_install if os.path.isdir(x))
+            if not source.startswith(starts) and not source in to_install:
                 continue
-            
+
             if os.path.isfile(source):
                 install(source, destination)
             elif os.path.isdir(source):
@@ -79,10 +97,12 @@ def main():
                     shutil.copymode(source, destination)
                 traverse(source)
             else:
-                print >> sys.stderr, '%s: Don\'t know how to handle that' % relative
-    
+                print >> sys.stderr, '%s: Don\'t know how to handle that' % \
+                                     relative
+
     def install(source, destination):
-        if options.ask and not input('%s: Install this file? [y/N]' % destination).lower() in ('y', 'yes'):
+        if options.ask and not input('%s: Install this file? [y/N]' %
+            destination).lower() in ('y', 'yes'):
             return
 
         if os.path.lexists(destination):
@@ -91,11 +111,12 @@ def main():
             elif options.force:
                 os.remove(destination)
             else:
-                if input('%s: File already exists, overwrite? [y/N]' % destination).lower() in ('y', 'yes'):
+                if input('%s: File already exists, overwrite? [y/N]' %
+                    destination).lower() in ('y', 'yes'):
                     os.remove(destination)
                 else:
                     return
-        
+
         if options.copy:
             shutil.copy(source, destination)
             typ = 'copy'
@@ -107,7 +128,7 @@ def main():
             typ = 'hard-link'
 
         print('%s: Installed (%s)' % (destination, typ))
-    
+
     traverse(os.getcwd())
 
 
