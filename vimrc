@@ -18,8 +18,14 @@ Bundle 'pbrisbin/html-template-syntax'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'Lokaltog/powerline'
 
 filetype plugin indent on
+
+" powerline
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+set laststatus=2
+set noshowmode
 
 " syntax highlighting
 syntax on
