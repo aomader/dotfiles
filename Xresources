@@ -19,13 +19,13 @@
 *color15: #F8F8F2
 
 ! Fonts
-*font: xft:DejaVu Sans Mono:pixelsize=10
+*font: xft:DejaVu Sans Mono for Powerline:pixelsize=10
 Xft.dpi: 96
 Xft.antialias: true
 Xft.lcdfilter: lcddefault
 Xft.autohint: false
 Xft.hinting: true
-Xft.hintstyle: hintsfull
+Xft.hintstyle: hintslight
 
 ! Cursor
 Xcursor*theme: Vanilla-DMZ-AA
