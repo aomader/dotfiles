@@ -113,6 +113,7 @@ alias proxy='sshuttle -r b52@reaktor42.de --dns 0/0'
 alias paste='fb'
 alias hibernate='systemctl hibernate'
 alias suspend='systemctl suspend'
+alias wuala='wuala -basepath /home/b52/.wuala'
 
 # Functions
 function extract() {

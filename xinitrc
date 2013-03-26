@@ -28,6 +28,8 @@ numlockx &
 parcellite &
 # Auto locker
 xautolock -detectsleep &
+# File synchronisation
+wuala -silent &
 
 # Source device dependent xinitrc
 . ${HOME}/.xinitrc.local
