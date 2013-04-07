@@ -87,8 +87,8 @@ PROMPT='%(?..%{$fg[red]%}%? )%(#.%{$fg_bold[red]%}.%{$fg[blue]%})%n%{$fg_no_bold
 
 # Really short shortcuts
 alias s='sudo'
-alias p='s pacman'
-alias c='s clyde'
+alias p='sudo pacman'
+alias a='sudo aura'
 alias v='vim'
 alias l='lesser'
 alias x='extract'
@@ -113,7 +113,7 @@ alias proxy='sshuttle -r b52@reaktor42.de --dns 0/0'
 alias paste='fb'
 alias hibernate='systemctl hibernate'
 alias suspend='systemctl suspend'
-alias wuala='wuala -basepath /home/b52/.wuala'
+alias matlab='matlab -nosplash'
 
 # Functions
 function extract() {
