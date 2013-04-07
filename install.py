@@ -31,6 +31,7 @@ THE SOFTWARE.
 import optparse
 import os
 import shutil
+import subprocess
 import sys
 
 
@@ -39,7 +40,7 @@ def main():
         parser.values.exclude = parser.values.exclude + value.split(',')
 
     parser = optparse.OptionParser(
-        usage='Usage: %prog [OPTIONS] FILES/DIRECTORIES..',
+        usage='Usage: %prog [OPTIONS] [FILES/DIRECTORIES..]',
         description='A simple yet powerful dotfiles install script')
     parser.add_option('-b', '--backup', action='store_true', dest='backup',
                       default=False, help='Backup old files')
@@ -59,6 +60,9 @@ def main():
                                '_darcs'],
                       help='Comma seperated list of files/directories to exclude',
         metavar='FILES')
+    parser.add_option('-S', '--submodules', action='store_true',
+                      dest='submodules', default=False,
+                      help='Firsst of all init and update git submodules')
     parser.add_option('-p', '--prefix', action='store', dest='prefix',
         default=os.path.expanduser('~'),
         help='Install location [default: %default]', metavar='PATH')
@@ -68,7 +72,7 @@ def main():
     to_install = [os.path.join(os.getcwd(), x) for x in args]
     excludes = [os.path.join(os.getcwd(), x) for x in options.exclude]
 
-    if not to_install:
+    if not to_install and not options.submodules:
         parser.print_help()
         sys.exit(1)
 
@@ -128,6 +132,12 @@ def main():
             typ = 'hard-link'
 
         print('%s: Installed (%s)' % (destination, typ))
+
+    if options.submodules:
+        subprocess.call(('git submodule foreach \'git submodule init && '
+                         'git submodule update && '
+                         'git pull origin master\''),
+                        shell=True)
 
     traverse(os.getcwd())
 
