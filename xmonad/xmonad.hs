@@ -49,7 +49,6 @@ myWorkspaces  = ["main", "web", "dev", "misc"]
 myTerminal    = "urxvt"
 myBorderWidth = 2
 myModMask     = mod4Mask
-myStartupHook = setWMName "LG3D"
 
 
 -- All types of layouts
@@ -122,9 +121,12 @@ myStatusBar = statusBar "xmobar" myPP toggleStrutsKey
     toggleStrutsKey XConfig {modMask = modm} = (modm, xK_b)
 
 
+-- EWMH sets the wmname, therefor we have to override that
+ewmhWithJava = (\cfg -> cfg { startupHook = startupHook cfg <+> setWMName "LG3D" }) . ewmh
+
 main = do
     stalonetray <- spawnPipe "stalonetray"
-    config <- withWindowNavigation (xK_k, xK_h, xK_j, xK_l) $ ewmh defaultConfig
+    config <- withWindowNavigation (xK_k, xK_h, xK_j, xK_l) $ ewmhWithJava defaultConfig
         { workspaces = myWorkspaces
         , terminal = myTerminal
         , borderWidth = myBorderWidth
@@ -134,7 +136,6 @@ main = do
         , keys = myKeys
         , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
         , layoutHook = myLayoutHook
-        , startupHook = myStartupHook
         , manageHook = myManageHook <+> manageDocks
         }
     xmonad . withUrgencyHook NoUrgencyHook =<< myStatusBar config
