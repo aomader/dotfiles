@@ -51,7 +51,7 @@ URxvt*matcher.rend.0: Uline Bold
 Xautolock.time: 10
 Xautolock.locker: slock
 Xautolock.killtime: 10
-Xautolock.killer: dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+Xautolock.killer: systemctl suspend
 Xautolock.corners: 000+
 Xautolock.cornerdelay: 3
 
