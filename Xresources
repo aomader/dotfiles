@@ -43,7 +43,7 @@ URxvt*cursorBlink: true
 URxvt*cursorUnderline: true
 URxvt*secondaryScroll: true
 URxvt*perl-ext-common: default,matcher
-URxvt*urlLauncher: firefox
+URxvt*url-launcher: firefox
 URxvt*matcher.button: 1
 URxvt*matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 URxvt*matcher.rend.0: Uline Bold
