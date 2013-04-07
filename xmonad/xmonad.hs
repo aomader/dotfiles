@@ -2,6 +2,7 @@ import XMonad
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.WindowNavigation
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -65,14 +66,18 @@ myManageHook = composeAll $
     , isDialog     --> doFloat
     , transience'
     , className =? "MPlayer" --> doFloat <+> doF copyToAll
+    , className =? "mplayer2" --> doFloat <+> doF copyToAll
     , className =? "Smplayer" --> doFloat <+> doF copyToAll
+    , className =? "Steam" --> doFloat
     , className =? "stalonetray" --> doIgnore
     ] ++
-    [className =? n --> doFloat | n <- dialogCFs] ++
-    [title =? n --> doFloat | n <- dialogNFs]
+    [ className =? n --> doFloat | n <- dialogCFs ] ++
+    [ title =? n --> doFloat | n <- dialogNFs ] ++
+    [ className =? "Firefox" <&&> resource =? r --> doFloat | r <- ffResources ]
   where
     dialogCFs = ["Pinentry-gtk-2"]
     dialogNFs = ["Ordner wählen"]
+    ffResources = ["Download", "Dialog"]
 
 
 -- All keyboard shortcuts
@@ -119,7 +124,7 @@ myStatusBar = statusBar "xmobar" myPP toggleStrutsKey
 
 main = do
     stalonetray <- spawnPipe "stalonetray"
-    config <- withWindowNavigation (xK_k, xK_h, xK_j, xK_l) $ defaultConfig
+    config <- withWindowNavigation (xK_k, xK_h, xK_j, xK_l) $ ewmh defaultConfig
         { workspaces = myWorkspaces
         , terminal = myTerminal
         , borderWidth = myBorderWidth
@@ -127,9 +132,10 @@ main = do
         , normalBorderColor = myBorderColor
         , focusedBorderColor = myFocusedColor
         , keys = myKeys
+        , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
         , layoutHook = myLayoutHook
         , startupHook = myStartupHook
-        , manageHook = myManageHook
+        , manageHook = myManageHook <+> manageDocks
         }
     xmonad . withUrgencyHook NoUrgencyHook =<< myStatusBar config
 
