@@ -6,29 +6,42 @@ Packages
     xmonad-contrib
     gmrun
     gnupg2
-    numlockx
     stalonetray
     parcellite
     fb-client
+    compton-git
+    rxvt-unicode-patched
+
+    aura
+    customizepkg
 
     xautolock
     slock
-    upower
     acpid
+    chrony
 
     ttf-dejavu
-    terminus-font
+    proggyfonts
+    ttf-ms-fonts
+    ttf-microsoft-arial
+    ttf-liberation
+    ttf-droid
 
     dropbox
     dropbox-cli
 
     elementary-icons
-    elementary-gtk-theme
+    adwaita-x-dark-and-light-theme
     xcursor-vanilla-dmz-aa
+    gnome-icon-theme
 
     texlive-most
     gvim
     dwb-hg
+
+    qtconfig-qt4
+    ------------
+    Use this tool to set GTK+ style and font
 
     gpg-agent
     ---------

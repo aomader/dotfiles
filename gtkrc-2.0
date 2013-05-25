@@ -1,5 +1,5 @@
-gtk-theme-name="elementary"
-gtk-icon-theme-name="elementary"
+gtk-theme-name="Adwaita-X-light"
+gtk-icon-theme-name="elementary-mono-dark"
 gtk-font-name="DejaVu Sans 8"
 gtk-cursor-theme-name="Vanilla-DMZ-AA"
 gtk-cursor-theme-size=0
