@@ -61,9 +61,8 @@ myLayoutHook = lessBorders OnlyFloat $ grid ||| tall ||| full
 
 -- Rules to handle the windows
 myManageHook = composeAll $
-    [ isFullscreen --> (doF W.focusDown <+> doFullFloat)
+    [ isFullscreen --> doFullFloat
     , isDialog     --> doFloat
-    , transience'
     , className =? "MPlayer" --> doFloat <+> doF copyToAll
     , className =? "mplayer2" --> doFloat <+> doF copyToAll
     , className =? "Smplayer" --> doFloat <+> doF copyToAll
