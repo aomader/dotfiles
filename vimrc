@@ -19,6 +19,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'Lokaltog/powerline'
+Bundle 'derekwyatt/vim-scala'
 
 filetype plugin indent on
 
