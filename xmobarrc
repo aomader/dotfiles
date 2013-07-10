@@ -1,5 +1,5 @@
 Config
-    { font = "xft:ProggyTiny:pixelsize=9"
+    { font = "xft:ProggyTiny:pixelsize=16"
     , fgColor = "#888888"
     , bgColor = "#2d2d2d"
     , position = TopSize L 100 16
