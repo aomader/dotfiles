@@ -11,7 +11,7 @@ export OOO_FORCE_DESKTOP=gnome
 export GDK_USE_XFT=1
 export QT_XFT=true
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
-export PATH="$(which ruby && ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/.bin:${HOME}/.cabal/bin:${PATH}"
+export PATH="/opt/android-sdk/tools:$(which ruby && ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/.bin:${HOME}/.cabal/bin:${PATH}"
 export PYTHONDOCS=/usr/share/doc/python/html/
 export ANDROID_HOME=/opt/android-sdk
 
@@ -51,6 +51,8 @@ bindkey "\e[4~" end-of-line
 bindkey "\e[3~" delete-char
 bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
 
 setopt hist_reduce_blanks
 setopt hist_ignore_space
@@ -58,6 +60,10 @@ setopt append_history
 setopt extended_history
 setopt hist_ignore_all_dups
 setopt prompt_subst
+setopt no_flow_control
+setopt no_case_glob
+setopt numeric_glob_sort
+setopt extended_glob
 
 typeset -ga precmd_functions
 typeset -ga preexec_functions
@@ -68,7 +74,8 @@ autoload -Uz vcs_info
 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
-zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*' completer _expand _complete _approximate _ignored _match
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' menu select=2
