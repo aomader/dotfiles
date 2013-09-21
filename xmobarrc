@@ -5,8 +5,10 @@ Config
     , position = TopSize L 100 16
     , commands = [ Run StdinReader
                  , Run Date "<fc=#bbbbbb>%A %d, <fc=#ffffff>%H:%M</fc></fc>" "date" 30
-                 , Run MultiCpu ["-t", "cpu:<fc=#cccccc><total>%</fc>"] 10
-                 , Run Memory ["-t", "mem:<fc=#cccccc><usedratio>%</fc>"] 10
+                 , Run MultiCpu ["-S", "on", "-t", "<total>"] 30
+                 , Run Memory ["-S", "on", "-t", "<usedratio>"] 30
+                 , Run DynNetwork ["-t", "<rx> / <tx>Kb/s"] 30
+                 , Run Battery ["-S", "on", "-t", "<left>"] 30
                  ]
-    , template = "  %StdinReader% }{ <fc=#777777>%multicpu%  <fc=#ffffff>/</fc>  %memory%</fc>        %date%  "
+    , template = "  %StdinReader% }{ <fc=#888888><fc=#6b2c74><icon=.xmonad/icons/down.xbm/></fc><fc=#88591b><icon=.xmonad/icons/up.xbm/></fc>  %dynnetwork%  <fc=#2c4b50><icon=.xmonad/icons/cpu.xbm/></fc> %multicpu%   <fc=#366136><icon=.xmonad/icons/mem.xbm/></fc> %memory%</fc>   <fc=#7c3131><icon=.xmonad/icons/battery.xbm/></fc> %battery%       %date%  "
     }

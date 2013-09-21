@@ -1,5 +1,5 @@
 background "#2d2d2d"
-geometry 10x1-300+0
+geometry 10x1-440+0
 grow_gravity W
 icon_gravity NE
 icon_size 16
