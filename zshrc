@@ -81,6 +81,7 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
+zstyle ':completion:*:commands' rehash 1
 zstyle ':completion:*:functions' ignored-patterns '_*'
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*' force-list always
