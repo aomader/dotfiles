@@ -62,7 +62,7 @@ def main():
         metavar='FILES')
     parser.add_option('-S', '--submodules', action='store_true',
                       dest='submodules', default=False,
-                      help='Firsst of all init and update git submodules')
+                      help='First of all init and update git submodules')
     parser.add_option('-p', '--prefix', action='store', dest='prefix',
         default=os.path.expanduser('~'),
         help='Install location [default: %default]', metavar='PATH')
@@ -134,7 +134,8 @@ def main():
         print('%s: Installed (%s)' % (destination, typ))
 
     if options.submodules:
-        subprocess.call(('git submodule foreach \'git submodule init && '
+        subprocess.call(('git submodule init && git submodule update && '
+                         'git submodule foreach \'git submodule init && '
                          'git submodule update && '
                          'git pull origin master\''),
                         shell=True)
