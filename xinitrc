@@ -13,7 +13,7 @@ else
 fi
 
 # Some visuals i wanna have really fast
-compton --backend glx &
+compton --vsync opengl-swc --backend glx --unredir-if-possible --glx-no-stencil &
 xsetroot -cursor_name left_ptr &
 hsetroot -fill ~/.wallpapers/current &
 
