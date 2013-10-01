@@ -20,6 +20,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'Lokaltog/powerline'
 Bundle 'derekwyatt/vim-scala'
+Bundle 'b4winckler/vim-objc'
 
 filetype plugin indent on
 
