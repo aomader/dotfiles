@@ -27,16 +27,16 @@ intended.
 * zsh, tmux, gnupg2, rxvt-unicode-patched, gvim
 * xmonad, xmonad-contrib, stalonetray, xmobar
 * compton-git, notify-osd, xautolock, slock
-* ttf-dejavu, proggyfonts, ttf-ms-fonts, ttf-liberation
+* ttf-dejavu, proggyfonts, ttf-ms-win8, ttf-liberation
 * elementary-icon-theme, gnome-icon-theme
 * adwaita-x-dark-and-light-theme, xcursor-vanilla-dmz-aa
 * cower, fb-client
-* gmrun, parcellite,
+* gmrun, parcellite
 
 The following packages are just a reminder for myself.
 
 * chrony, acpid
-* ttf-droid, ttf-microsoft-arial
+* ttf-droid
 * dropbox, dropbox-cli
 * texlive-most
 

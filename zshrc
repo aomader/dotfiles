@@ -10,7 +10,7 @@ export BROWSER=firefox
 export OOO_FORCE_DESKTOP=gnome
 export GDK_USE_XFT=1
 export QT_XFT=true
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 export PATH="/opt/android-sdk/tools:$(which ruby && ruby -rubygems -e "puts Gem.user_dir")/bin:${HOME}/.bin:${HOME}/.cabal/bin:${PATH}"
 export PYTHONDOCS=/usr/share/doc/python/html/
 export ANDROID_HOME=/opt/android-sdk
