@@ -21,6 +21,7 @@ hsetroot -fill ~/.wallpapers/current &
 export GTK2_RC_FILES="${HOME}/.gtkrc-2.0"
 # Some xmonad related bonus
 export _JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 # key repeating
 xset r rate 200 35 &
