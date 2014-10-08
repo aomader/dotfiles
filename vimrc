@@ -4,23 +4,24 @@ set encoding=UTF-8
 " vundle package manager
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
 
 " packages
-Bundle 'vim-scripts/The-NERD-tree'
-Bundle 'msanders/snipmate.vim'
-Bundle 'wavded/vim-stylus'
-Bundle 'digitaltoad/vim-jade'
-Bundle 'tpope/vim-markdown'
-Bundle 'pbrisbin/html-template-syntax'
-Bundle 'scrooloose/syntastic'
-Bundle 'kien/ctrlp.vim'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'Lokaltog/powerline'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'b4winckler/vim-objc'
+Plugin 'vim-scripts/The-NERD-tree'
+Plugin 'msanders/snipmate.vim'
+Plugin 'wavded/vim-stylus'
+Plugin 'digitaltoad/vim-jade'
+Plugin 'tpope/vim-markdown'
+Plugin 'pbrisbin/html-template-syntax'
+Plugin 'scrooloose/syntastic'
+Plugin 'kien/ctrlp.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Lokaltog/powerline'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'b4winckler/vim-objc'
+Plugin 'wting/rust.vim'
 
 filetype plugin indent on
 

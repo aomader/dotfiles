@@ -39,6 +39,8 @@ The following packages are just a reminder for myself.
 * ttf-droid
 * dropbox, dropbox-cli
 * texlive-most
+* xrr-events-git
+* mimeo, xdg-utils-mimeo
 
 ## Additional Instructions
 

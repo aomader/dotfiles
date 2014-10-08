@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# global startup scripts
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
 # Read Xresources
 xrdb -merge ~/.Xresources
 
@@ -32,6 +40,13 @@ wicd-client -t &
 parcellite &
 # Auto locker
 xautolock -detectsleep &
+# audio
+start-pulseaudio-x11 -D &
+pasystray &
+# display management
+xrr-events --daemonize &
+# keyboard
+xmodmap ~/.Xmodmap &
 
 # Source device dependent xinitrc
 . ${HOME}/.xinitrc.local

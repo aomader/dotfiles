@@ -69,28 +69,54 @@ def main():
 
     (options, args) = parser.parse_args()
 
-    to_install = [os.path.join(os.getcwd(), x) for x in args]
-    excludes = [os.path.join(os.getcwd(), x) for x in options.exclude]
+    excludes = [os.path.realpath(x) for x in options.exclude]
+    root = os.path.dirname(os.path.realpath(__file__))
+    cwd = os.getcwd()
 
-    if not to_install and not options.submodules:
+    if not args and not options.submodules:
         parser.print_help()
         sys.exit(1)
+
+    def iterate(items):
+        for item in items:
+            source = os.path.realpath(item)
+            relative = os.path.relpath(source, root)
+            destination = os.path.join(options.prefix,
+                    ('' if item.startswith('.') else '.') + item)
+
+            print('source', source)
+            print('destination', destination)
+
+            if os.path.isfile(source):
+                install(source, destination)
+            elif os.path.isdir(source):
+                children = map(lambda x: os.path.relpath(os.path.join(source,
+                                         x), cwd),
+                               sorted(os.listdir(source)))
+                iterate(children)
+                continue
+
+                if not os.path.exists(destination):
+                    os.mkdir(destination)
+                    shutil.copymode(source, destination)
+                traverse(source)
 
     def traverse(path):
         for item in os.listdir(path):
             source = os.path.join(path, item)
             relative = os.path.relpath(source)
 
-            if relative.startswith('.'):
-                destination = os.path.join(options.prefix, relative)
-            else:
-                destination = os.path.join(options.prefix, '.' + relative)
+            destination = os.path.join(options.prefix,
+                    ('' if relative.startswith('.') else '.') + relative)
+
+            print('p', source)
 
             if source in excludes:
+                print('ex')
                 continue
 
-            starts = tuple(x + '/' for x in to_install if os.path.isdir(x))
             if not source.startswith(starts) and not source in to_install:
+                print('not ins')
                 continue
 
             if os.path.isfile(source):
@@ -108,6 +134,10 @@ def main():
         if options.ask and not input('%s: Install this file? [y/N]' %
             destination).lower() in ('y', 'yes'):
             return
+
+        directory = os.path.dirname(destination)
+        if not os.path.lexists(directory):
+            os.makedirs(directory)
 
         if os.path.lexists(destination):
             if options.backup:
@@ -140,7 +170,8 @@ def main():
                          'git pull origin master\''),
                         shell=True)
 
-    traverse(os.getcwd())
+    #traverse(os.getcwd())
+    iterate(args)
 
 
 if __name__ == '__main__':
